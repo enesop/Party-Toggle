@@ -11,6 +11,7 @@ public class PTConfig extends ConfigurationCreator {
 
 	protected PTConfig(File file, PAFExtension pPlugin) throws IOException {
 		super(file, pPlugin, true);
+		copyFromJar();
 		readFile();
 		loadDefaultValues();
 		saveFile();
@@ -21,6 +22,7 @@ public class PTConfig extends ConfigurationCreator {
 		set("Names", "toggle", "toggle-chat");
 		set("Priority", 1000);
 		set("Permission", "");
+		set("IgnoredPrefixes", "@p", "@a", "@r");
 		set("Messages.Activated",
 				"&7From now on all you write will be automatically written into the party chat, as long as you are in a party");
 		set("Messages.Disabled",

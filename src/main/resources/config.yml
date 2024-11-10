@@ -1,0 +1,15 @@
+Names:
+  - toggle
+  - toggle-chat
+Priority: 1000
+Permission: ''
+# If a player writes a message that starts with one of the prefixes, the message will not be sent to the party chat, even if /party toggle is enabled by the player
+IgnoredPrefixes:
+  - '@p'
+  - '@a'
+  - '@r'
+Messages:
+  Activated: '&7From now on all you write will be automatically written into the party
+    chat, as long as you are in a party'
+  Disabled: '&7From now on you can write again normal into the chat'
+  Help: '&8/&5Party toggle  &8- &7Toggles if you write directly into the party chat'
