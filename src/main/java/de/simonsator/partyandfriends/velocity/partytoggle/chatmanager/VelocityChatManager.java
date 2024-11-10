@@ -6,12 +6,18 @@ import com.velocitypowered.api.event.player.PlayerChatEvent;
 import com.velocitypowered.api.proxy.Player;
 import de.simonsator.partyandfriends.velocity.api.pafplayers.PAFPlayerManager;
 
+import java.util.List;
+
 public class VelocityChatManager extends UniversalChatManager {
+	public VelocityChatManager(List<String> ignoredPrefixes) {
+		super(ignoredPrefixes);
+	}
+
 	@Subscribe
 	public void onWrite(PlayerChatEvent pEvent) {
 		Player player = pEvent.getPlayer();
 		String message = pEvent.getMessage();
-		if (message.startsWith("/"))
+		if (message.startsWith("/") || startsWithIgnoredPrefix(message))
 			return;
 		if (hasPartyChatNotEnabled(player.getUniqueId()))
 			return;

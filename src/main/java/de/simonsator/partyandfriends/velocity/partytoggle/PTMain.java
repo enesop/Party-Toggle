@@ -10,6 +10,7 @@ import de.simonsator.partyandfriends.velocity.partytoggle.chatmanager.UniversalC
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 public class PTMain extends PAFExtension {
 
@@ -23,9 +24,10 @@ public class PTMain extends PAFExtension {
 			PTConfig config = (new PTConfig(new File(getConfigFolder(), "config.yml"), this));
 			UniversalChatManager chatManager;
 			ServerSoftware serverSoftware = getAdapter().getServerSoftware();
+			List<String> ignoredPrefixes = config.getStringList("IgnoredPrefixes");
 			switch (serverSoftware) {
 				case VELOCITY:
-					chatManager = VelocityChatManagerFactory.createChatManager();
+					chatManager = VelocityChatManagerFactory.createChatManager(ignoredPrefixes);
 					break;
 				default:
 					throw new RuntimeException("Unsupported server software " + serverSoftware);
