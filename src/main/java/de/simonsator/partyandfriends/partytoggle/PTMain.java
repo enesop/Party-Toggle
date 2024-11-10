@@ -9,6 +9,7 @@ import de.simonsator.partyandfriends.partytoggle.chatmanager.UniversalChatManage
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class PTMain extends PAFExtension {
 
@@ -18,12 +19,13 @@ public class PTMain extends PAFExtension {
 			PTConfig config = (new PTConfig(new File(getConfigFolder(), "config.yml"), this));
 			UniversalChatManager chatManager;
 			ServerSoftware serverSoftware = getAdapter().getServerSoftware();
+			List<String> ignoredPrefixes = config.getStringList("IgnoredPrefixes");
 			switch (serverSoftware) {
 				case BUNGEECORD:
-					chatManager = BungeeChatManagerFactory.createChatManager();
+					chatManager = BungeeChatManagerFactory.createChatManager(ignoredPrefixes);
 					break;
 				case SPIGOT:
-					chatManager = SpigotChatManagerFactory.createChatManager();
+					chatManager = SpigotChatManagerFactory.createChatManager(ignoredPrefixes);
 					break;
 				default:
 					throw new RuntimeException("Unsupported server software " + serverSoftware);

@@ -7,13 +7,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.List;
+
 public class SpigotChatManager extends UniversalChatManager implements Listener {
+	public SpigotChatManager(List<String> ignoredPrefixes) {
+		super(ignoredPrefixes);
+	}
+
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onWrite(PlayerChatEvent pEvent) {
 		Player player = pEvent.getPlayer();
 		String message = pEvent.getMessage();
-		if (message.startsWith("/"))
+		if (message.startsWith("/") || startsWithIgnoredPrefix(message))
 			return;
 		if (hasPartyChatNotEnabled(player.getUniqueId()))
 			return;

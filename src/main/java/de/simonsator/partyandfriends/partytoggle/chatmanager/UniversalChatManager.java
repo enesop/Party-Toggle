@@ -7,10 +7,18 @@ import de.simonsator.partyandfriends.api.party.PlayerParty;
 import de.simonsator.partyandfriends.party.command.PartyChat;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 public class UniversalChatManager {
 	private final HashSet<UUID> players = new HashSet<>();
+	protected final List<String> IGNORED_PREFIXES;
+	private final boolean IGNORED_PREFIXES_IS_EMPTY;
+
+	public UniversalChatManager(List<String> ignoredPrefixes) {
+		IGNORED_PREFIXES = ignoredPrefixes;
+		IGNORED_PREFIXES_IS_EMPTY = ignoredPrefixes.isEmpty();
+	}
 
 	protected boolean executeChat(PAFPlayer pPlayer, String pMessage) {
 		if (pPlayer instanceof OnlinePAFPlayer) {
@@ -29,6 +37,16 @@ public class UniversalChatManager {
 			return false;
 		players.add(pUUID);
 		return true;
+	}
+
+	public boolean startsWithIgnoredPrefix(String pMessage) {
+		if (IGNORED_PREFIXES_IS_EMPTY)
+			return false;
+		for (String prefix : IGNORED_PREFIXES) {
+			if (pMessage.startsWith(prefix))
+				return true;
+		}
+		return false;
 	}
 
 	protected boolean hasPartyChatNotEnabled(UUID pUUID) {

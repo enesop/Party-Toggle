@@ -7,7 +7,13 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
+import java.util.List;
+
 public class BungeeChatManager extends UniversalChatManager implements Listener {
+	public BungeeChatManager(List<String> ignoredPrefixes) {
+		super(ignoredPrefixes);
+	}
+
 	@EventHandler
 	public void onWrite(ChatEvent pEvent) {
 		if (!(pEvent.getSender() instanceof ProxiedPlayer)) {
@@ -15,7 +21,7 @@ public class BungeeChatManager extends UniversalChatManager implements Listener 
 		}
 		ProxiedPlayer player = (ProxiedPlayer) pEvent.getSender();
 		String message = pEvent.getMessage();
-		if (message.startsWith("/"))
+		if (message.startsWith("/") || startsWithIgnoredPrefix(message))
 			return;
 		if (hasPartyChatNotEnabled(player.getUniqueId()))
 			return;
