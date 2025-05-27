@@ -4,7 +4,7 @@ import de.simonsator.partyandfriends.api.pafplayers.PAFPlayerManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.List;
@@ -14,9 +14,8 @@ public class SpigotChatManager extends UniversalChatManager implements Listener 
 		super(ignoredPrefixes);
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
-	public void onWrite(PlayerChatEvent pEvent) {
+	public void onWrite(AsyncPlayerChatEvent pEvent) {
 		Player player = pEvent.getPlayer();
 		String message = pEvent.getMessage();
 		if (message.startsWith("/") || startsWithIgnoredPrefix(message))
